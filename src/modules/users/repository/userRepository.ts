@@ -12,8 +12,17 @@ const getAllRegisteredUsers = async () => {
     return await User.find()
 }
 
-const findUserByEmail = async (email: string) => {
-    return await User.findOne({email});
+const updateUserById = async (id:any,body:any) => {
+    return await User.findByIdAndUpdate(id,{
+        name:body.name,
+        email:body.email
+    },{
+        new:true
+    });
+}
+
+const findUserByEmail = async(email:any)=>{
+    return await User.findOne(email)
 }
 
 const findUserById = async (id: string) => {
@@ -30,8 +39,9 @@ const updateUserByEmail = async (email: string, data: any) => {
 
 export {
     createUser,
-    getUsers,
     findUserByEmail,
+    getUsers,
+    updateUserById,
     deleteUserByEmail,
     updateUserByEmail,
     getAllRegisteredUsers,
