@@ -7,6 +7,6 @@ const userRoutes = express.Router();
 userRoutes.post("/register", userController.registerUser)
 userRoutes.get("/users", userController.getAllUsers)
 userRoutes.post("/login", userController.loginUser)
-userRoutes.patch("/update", userController.updateUser)
+userRoutes.put("/update/:id", userController.updateUser)
 userRoutes.delete("/delete",Auth, userController.deleteUser)
 export default userRoutes;

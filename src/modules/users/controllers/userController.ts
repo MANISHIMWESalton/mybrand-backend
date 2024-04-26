@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { comparePassword, encryptPassword, generateToken } from '../../../utils'
-import { createUser, deleteUserByEmail, findUserByEmail, getAllRegisteredUsers, updateUserByEmail } from "../repository/userRepository";
+import { createUser, deleteUserByEmail, getAllRegisteredUsers, updateUserByEmail, updateUserById,findUserByEmail } from "../repository/userRepository";
 
 const registerUser = async (req: Request, res: Response)=>{
     const {name, email, password} = req.body;
@@ -41,7 +41,8 @@ const deleteUser = async (req: Request, res: Response)=>{
 
 const updateUser = async (req: Request, res: Response)=>{
     const {name, email} = req.body;
-    const user = await findUserByEmail(email);
+    const id = req.params.id
+    const user = await updateUserById(id,{name,email});
     if(!user) return res.json({status: false, message: "User doesn't exist."});
     const updatedUser = await updateUserByEmail(email, {name});
     if(updatedUser.modifiedCount > 0) res.json({status: true, message: "User updated successfully"});
