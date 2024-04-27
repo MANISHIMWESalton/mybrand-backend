@@ -22,7 +22,7 @@ const updateUserById = async (id:any,body:any) => {
 }
 
 const findUserByEmail = async(email:any)=>{
-    return await User.findOne(email)
+    return await User.findOne({email})
 }
 
 const findUserById = async (id: string) => {

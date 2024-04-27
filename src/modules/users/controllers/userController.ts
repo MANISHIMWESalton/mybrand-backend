@@ -39,6 +39,7 @@ const deleteUser = async (req: Request, res: Response)=>{
     else res.json({status: true, message: "Deleted."});
 }
 
+
 const updateUser = async (req: Request, res: Response)=>{
     const {name, email} = req.body;
     const id = req.params.id
