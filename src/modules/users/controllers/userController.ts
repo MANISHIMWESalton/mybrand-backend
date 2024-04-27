@@ -40,15 +40,41 @@ const deleteUser = async (req: Request, res: Response)=>{
 }
 
 
-const updateUser = async (req: Request, res: Response)=>{
-    const {name, email} = req.body;
-    const id = req.params.id
-    const user = await updateUserById(id,{name,email});
-    if(!user) return res.json({status: false, message: "User doesn't exist."});
-    const updatedUser = await updateUserByEmail(email, {name});
-    if(updatedUser.modifiedCount > 0) res.json({status: true, message: "User updated successfully"});
-    else res.json({status: false, message: "Failed to update User"});
+const updateUser = async (req: Request, res: Response) => {
+    try {
+        const { name, email } = req.body;
+        const id = req.params.id;
+        
+        // Update user by ID
+        const user = await updateUserById(id, { name, email });
+        
+        if (!user) {
+            return res.json({ status: false, message: "User doesn't exist." });
+        }
+
+        // Update user by email
+        const updatedUser = await updateUserByEmail(email, { name });
+
+        if (updatedUser.modifiedCount > 0) {
+            return res.json({ status: true, message: "User updated successfully" });
+        } else {
+            return res.json({ status: false, message: "Failed to update User" });
+        }
+    } catch (error) {
+        console.error("Error updating user:", error);
+        return res.status(500).json({ status: false, message: "Internal Server Error" });
+    }
 }
+
+// const updateUser = async (req: Request, res: Response)=>{
+//     const {name, email} = req.body;
+//     const id = req.params.id
+//     const user = await updateUserById(id,{name,email});
+//     if(!user) return res.json({status: false, message: "User doesn't exist."});
+//     const updatedUser = await updateUserByEmail(email, {name});
+//     if(updatedUser.modifiedCount > 0) res.json({status: true, message: "User updated successfully"});
+//     else res.json({status: false, message: "Failed to update User"});
+// }
 
 export default{
     registerUser,
